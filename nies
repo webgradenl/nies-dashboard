@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bram's Nieztracker 🤧</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0d0d1a;
+      --card: #12122a;
+      --border: #222248;
+      --red: #e94560;
+      --green: #44cf6c;
+      --orange: #ff6b35;
+      --gold: #f7c59f;
+      --blue: #64b5f6;
+      --text: #f0f0f0;
+      --muted: #888;
+      --dim: #555;
+      --faint: #333;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', 'Courier New', monospace;
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 2px; }
+
+    /* HEADER */
+    .header {
+      background: linear-gradient(135deg, #12122a 0%, #1a0a2e 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 40px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 50%, rgba(233,69,96,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .header-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .header h1 span.accent { color: var(--red); }
+    .sneeze-icon {
+      display: inline-block;
+      margin-left: 12px;
+      animation: sneeze 2s infinite;
+    }
+    .header-sub {
+      color: var(--muted);
+      margin-top: 10px;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+    }
+
+    /* MAIN */
+    .main { padding: 32px 40px; max-width: 1100px; margin: 0 auto; }
+
+    /* KPI GRID */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .kpi-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      transition: border-color 0.3s;
+      animation: fadeUp 0.5s ease both;
+    }
+    .kpi-card:hover { border-color: var(--red); }
+    .kpi-label {
+      font-size: 10px;
+      color: var(--dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .kpi-value {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      line-height: 1;
+    }
+    .kpi-unit { font-size: 11px; color: var(--dim); margin-top: 6px; }
+
+    /* TABS */
+    .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+    .tab {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 8px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      transition: all 0.2s;
+    }
+    .tab:hover { border-color: var(--red); color: var(--text); }
+    .tab.active { background: var(--red); border-color: var(--red); color: #fff; font-weight: 500; }
+
+    /* CARD */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: border-color 0.3s;
+      animation: fadeUp 0.5s ease both;
+    }
+    .card:hover { border-color: var(--red); }
+    .card-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .card-sub { font-size: 11px; color: var(--dim); margin-bottom: 24px; }
+
+    /* CHART HEADER */
+    .chart-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .legend { display: flex; gap: 16px; font-size: 11px; color: var(--dim); }
+    .legend-dot {
+      display: inline-block;
+      width: 10px; height: 10px;
+      border-radius: 2px;
+      margin-right: 6px;
+    }
+    .chart-wrap { position: relative; height: 300px; }
+
+    /* BOTTOM GRID */
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    /* MEDICATIE BARS */
+    .med-compare { display: flex; align-items: center; gap: 20px; }
+    .med-block { flex: 1; }
+    .med-lbl { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+    .bar-track { background: #1e1e3a; border-radius: 8px; height: 8px; margin-bottom: 6px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 8px; transition: width 1.2s ease; }
+    .med-value { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; line-height: 1; }
+    .med-sub { font-size: 11px; color: var(--dim); }
+    .med-arrow { font-size: 24px; color: var(--faint); }
+    .result-box {
+      margin-top: 20px;
+      padding: 12px 16px;
+      background: rgba(68,207,108,0.08);
+      border: 1px solid rgba(68,207,108,0.2);
+      border-radius: 10px;
+      text-align: center;
+    }
+    .result-big { color: var(--green); font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; }
+    .result-small { color: var(--dim); font-size: 11px; display: block; margin-top: 2px; }
+
+    /* LOG */
+    .card-title-sm { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+    .log-list { display: flex; flex-direction: column; gap: 10px; }
+    .log-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: var(--bg);
+    }
+    .log-date { font-size: 11px; font-weight: 500; white-space: nowrap; margin-top: 1px; }
+    .log-note { color: var(--muted); font-size: 12px; }
+
+    /* FOOTER */
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      color: var(--faint);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+
+    /* ANIMATIONS */
+    @keyframes sneeze {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-8deg) scale(1.1); }
+      75% { transform: rotate(8deg) scale(1.1); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 700px) {
+      .header, .main { padding: 24px 20px; }
+      .bottom-grid { grid-template-columns: 1fr; }
+      .chart-header { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-eyebrow">▸ Officieel Werkplek Rapport — DSL Group</div>
+    <h1>
+      Bram's <span class="accent">Niez</span>Tracker
+      <span class="sneeze-icon">🤧</span>
+    </h1>
+    <p class="header-sub">Periode 23 mrt — 22 apr 2026 &nbsp;·&nbsp; 22 werkdagen bijgehouden</p>
+  </div>
+
+  <div class="main">
+
+    <!-- KPI GRID -->
+    <div class="kpi-grid" id="kpiGrid"></div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('trend', this)">Trendlijn</button>
+      <button class="tab" onclick="switchTab('bars', this)">Per dag</button>
+    </div>
+
+    <!-- CHART CARD -->
+    <div class="card" style="padding: 28px 20px 20px;">
+      <div class="chart-header">
+        <div>
+          <div class="card-title" id="chartTitle">Niezen over tijd</div>
+          <div class="card-sub">Rode stippellijn = start medicatie (10 apr)</div>
+        </div>
+        <div class="legend">
+          <span><span class="legend-dot" style="background:#e94560"></span>vóór medicatie</span>
+          <span><span class="legend-dot" style="background:#44cf6c"></span>ná medicatie</span>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="mainChart"></canvas>
+      </div>
+    </div>
+
+    <!-- BOTTOM GRID -->
+    <div class="bottom-grid">
+
+      <!-- MEDICATIE EFFECT -->
+      <div class="card" style="animation-delay:0.5s">
+        <div class="card-title-sm">💊 Effect medicatie</div>
+        <div class="med-compare">
+          <div class="med-block">
+            <div class="med-lbl">Vóór</div>
+            <div class="bar-track"><div class="bar-fill" id="barVoor" style="background:#e94560; width:0%"></div></div>
+            <div class="med-value" style="color:#e94560" id="valVoor">—</div>
+            <div class="med-sub">gem. per dag</div>
+          </div>
+          <div class="med-arrow">→</div>
+          <div class="med-block">
+            <div class="med-lbl">Ná</div>
+            <div class="bar-track"><div class="bar-fill" id="barNa" style="background:#44cf6c; width:0%"></div></div>
+            <div class="med-value" style="color:#44cf6c" id="valNa">—</div>
+            <div class="med-sub">gem. per dag</div>
+          </div>
+        </div>
+        <div class="result-box">
+          <span class="result-big" id="reductieVal">—</span>
+          <span class="result-small">minder niezen na medicatie</span>
+        </div>
+      </div>
+
+      <!-- LOG -->
+      <div class="card" style="animation-delay:0.6s">
+        <div class="card-title-sm">📋 Bijzonderheden</div>
+        <div class="log-list" id="logList"></div>
+      </div>
+
+    </div>
+
+    <div class="footer">BRAM NIEZ MONITOR v1.0 &nbsp;·&nbsp; GEZONDHEID IS EEN WERKPLEKPRIORITEIT 🤧</div>
+  </div>
+
+  <script>
+    const data = [
+      { date: "23/03", niezen: 7,  medicatie: false, note: null },
+      { date: "24/03", niezen: 5,  medicatie: false, note: null },
+      { date: "25/03", niezen: 7,  medicatie: false, note: null },
+      { date: "26/03", niezen: 2,  medicatie: false, note: null },
+      { date: "27/03", niezen: 5,  medicatie: false, note: "5+ niezen, exact niet geteld" },
+      { date: "30/03", niezen: 8,  medicatie: false, note: null },
+      { date: "31/03", niezen: 2,  medicatie: false, note: "🏠 Thuiswerken → slechts 2 niezen" },
+      { date: "01/04", niezen: 6,  medicatie: false, note: null },
+      { date: "02/04", niezen: 2,  medicatie: false, note: null },
+      { date: "03/04", niezen: 3,  medicatie: false, note: null },
+      { date: "07/04", niezen: 6,  medicatie: false, note: null },
+      { date: "08/04", niezen: 2,  medicatie: false, note: "💼 Sales training dag → 2 niezen" },
+      { date: "09/04", niezen: 10, medicatie: false, note: "🔴 RECORD: 10 niezen in één dag" },
+      { date: "10/04", niezen: 4,  medicatie: true,  note: "💊 Start medicatie → direct effect" },
+      { date: "13/04", niezen: 4,  medicatie: true,  note: null },
+      { date: "14/04", niezen: 1,  medicatie: true,  note: null },
+      { date: "15/04", niezen: 1,  medicatie: true,  note: null },
+      { date: "16/04", niezen: 4,  medicatie: true,  note: null },
+      { date: "17/04", niezen: 3,  medicatie: true,  note: null },
+      { date: "20/04", niezen: 2,  medicatie: true,  note: null },
+      { date: "21/04", niezen: 1,  medicatie: true,  note: null },
+      { date: "22/04", niezen: 1,  medicatie: true,  note: null },
+    ];
+
+    const voor = data.filter(d => !d.medicatie);
+    const na   = data.filter(d => d.medicatie);
+    const totaal   = data.reduce((s, d) => s + d.niezen, 0);
+    const gemVoor  = (voor.reduce((s, d) => s + d.niezen, 0) / voor.length).toFixed(1);
+    const gemNa    = (na.reduce((s, d)  => s + d.niezen, 0) / na.length).toFixed(1);
+    const reductie = Math.round((1 - gemNa / gemVoor) * 100);
+    const record   = data.reduce((m, d) => d.niezen > m.niezen ? d : m, data[0]);
+
+    // KPI cards
+    const kpis = [
+      { label: "Totaal niezen",         value: totaal,       unit: "keer",       color: "#e94560", delay: "0.1s" },
+      { label: "Record dag",            value: record.niezen, unit: record.date, color: "#ff6b35", delay: "0.2s" },
+      { label: "Gem. vóór medicatie",   value: gemVoor,      unit: "/ dag",      color: "#f7c59f", delay: "0.3s" },
+      { label: "Gem. ná medicatie",     value: gemNa,        unit: "/ dag",      color: "#44cf6c", delay: "0.4s" },
+      { label: "Reductie",              value: reductie + "%", unit: "minder",   color: "#44cf6c", delay: "0.5s" },
+    ];
+    const grid = document.getElementById("kpiGrid");
+    kpis.forEach(k => {
+      grid.innerHTML += `
+        <div class="kpi-card" style="animation-delay:${k.delay}">
+          <div class="kpi-label">${k.label}</div>
+          <div class="kpi-value" style="color:${k.color}">${k.value}</div>
+          <div class="kpi-unit">${k.unit}</div>
+        </div>`;
+    });
+
+    // Medicatie bars (animated on load)
+    document.getElementById("valVoor").textContent = gemVoor;
+    document.getElementById("valNa").textContent   = gemNa;
+    document.getElementById("reductieVal").textContent = `-${reductie}%`;
+    setTimeout(() => {
+      document.getElementById("barVoor").style.width = `${(gemVoor / 10) * 100}%`;
+      document.getElementById("barNa").style.width   = `${(gemNa   / 10) * 100}%`;
+    }, 300);
+
+    // Log
+    const logs = [
+      { date: "27/03", note: "5+ niezen, exact niet geteld",         color: "#f7c59f" },
+      { date: "31/03", note: "Thuiswerken → slechts 2 niezen",       color: "#64b5f6" },
+      { date: "06/04", note: "Vrije dag, geen data",                  color: "#555" },
+      { date: "08/04", note: "Sales training dag → 2 niezen",         color: "#64b5f6" },
+      { date: "09/04", note: "🔴 RECORD: 10 niezen in één dag",       color: "#ff6b35" },
+      { date: "10/04", note: "💊 Start medicatie → direct effect",    color: "#44cf6c" },
+    ];
+    const logList = document.getElementById("logList");
+    logs.forEach(l => {
+      logList.innerHTML += `
+        <div class="log-item" style="border-left: 3px solid ${l.color}">
+          <span class="log-date" style="color:${l.color}">${l.date}</span>
+          <span class="log-note">${l.note}</span>
+        </div>`;
+    });
+
+    // Chart.js
+    const labels = data.map(d => d.date);
+    const values = data.map(d => d.niezen);
+    const medicatieIndex = data.findIndex(d => d.medicatie);
+
+    const pointColors = data.map(d =>
+      d.date === record.date ? "#ff6b35" :
+      d.medicatie ? "#44cf6c" : "#e94560"
+    );
+
+    const ctx = document.getElementById("mainChart").getContext("2d");
+
+    // Gradient
+    const grad = ctx.createLinearGradient(0, 0, 0, 280);
+    grad.addColorStop(0, "rgba(233,69,96,0.35)");
+    grad.addColorStop(1, "rgba(233,69,96,0)");
+
+    let chart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels,
+        datasets: [{
+          data: values,
+          borderColor: pointColors,
+          borderWidth: 2.5,
+          pointBackgroundColor: pointColors,
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          tension: 0.35,
+          fill: true,
+          backgroundColor: grad,
+          segment: {
+            borderColor: ctx => {
+              const idx = ctx.p0DataIndex;
+              return data[idx].medicatie ? "#44cf6c" : "#e94560";
+            }
+          }
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: "#1a1a2e",
+            borderColor: "#e94560",
+            borderWidth: 1,
+            titleColor: "#e94560",
+            bodyColor: "#f0f0f0",
+            padding: 12,
+            titleFont: { family: "DM Mono", size: 12 },
+            bodyFont: { family: "DM Mono", size: 12 },
+            callbacks: {
+              title: items => items[0].label,
+              label: item => {
+                const d = data[item.dataIndex];
+                let s = `🤧 ${d.niezen} niezen`;
+                if (d.note) s += `\n${d.note}`;
+                return s;
+              }
+            }
+          },
+          annotation: {
+            annotations: {
+              medicatieLine: {
+                type: "line",
+                xMin: "10/04",
+                xMax: "10/04",
+                borderColor: "rgba(233,69,96,0.7)",
+                borderWidth: 2,
+                borderDash: [4, 3],
+                label: {
+                  display: true, content: "💊",
+                  position: "start", font: { size: 16 }
+                }
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { color: "#1e1e3a", drawTicks: false },
+            ticks: { color: "#555", font: { family: "DM Mono", size: 10 }, maxRotation: 45 },
+            border: { color: "#222248" }
+          },
+          y: {
+            grid: { color: "#1e1e3a", drawTicks: false },
+            ticks: { color: "#555", font: { family: "DM Mono", size: 10 } },
+            border: { display: false },
+            min: 0, max: 12
+          }
+        }
+      }
+    });
+
+    // Tab switch
+    function switchTab(type, btn) {
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      btn.classList.add("active");
+
+      const isBar = type === "bars";
+      document.getElementById("chartTitle").textContent = isBar ? "Dagelijks overzicht" : "Niezen over tijd";
+
+      chart.destroy();
+
+      const barColors = data.map(d =>
+        d.date === record.date ? "#ff6b35" :
+        d.medicatie ? "rgba(68,207,108,0.8)" : "rgba(233,69,96,0.8)"
+      );
+
+      const newCtx = document.getElementById("mainChart").getContext("2d");
+      const newGrad = newCtx.createLinearGradient(0, 0, 0, 280);
+      newGrad.addColorStop(0, "rgba(233,69,96,0.35)");
+      newGrad.addColorStop(1, "rgba(233,69,96,0)");
+
+      chart = new Chart(newCtx, {
+        type: isBar ? "bar" : "line",
+        data: {
+          labels,
+          datasets: [{
+            data: values,
+            ...(isBar ? {
+              backgroundColor: barColors,
+              borderRadius: 4,
+              borderSkipped: false,
+            } : {
+              borderColor: pointColors,
+              borderWidth: 2.5,
+              pointBackgroundColor: pointColors,
+              pointRadius: 5,
+              pointHoverRadius: 7,
+              tension: 0.35,
+              fill: true,
+              backgroundColor: newGrad,
+              segment: {
+                borderColor: ctx => data[ctx.p0DataIndex].medicatie ? "#44cf6c" : "#e94560"
+              }
+            })
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: "#1a1a2e",
+              borderColor: "#e94560",
+              borderWidth: 1,
+              titleColor: "#e94560",
+              bodyColor: "#f0f0f0",
+              padding: 12,
+              titleFont: { family: "DM Mono", size: 12 },
+              bodyFont: { family: "DM Mono", size: 12 },
+              callbacks: {
+                title: items => items[0].label,
+                label: item => {
+                  const d = data[item.dataIndex];
+                  let s = `🤧 ${d.niezen} niezen`;
+                  if (d.note) s += `\n${d.note}`;
+                  return s;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: "#1e1e3a", drawTicks: false },
+              ticks: { color: "#555", font: { family: "DM Mono", size: 10 }, maxRotation: 45 },
+              border: { color: "#222248" }
+            },
+            y: {
+              grid: { color: "#1e1e3a", drawTicks: false },
+              ticks: { color: "#555", font: { family: "DM Mono", size: 10 } },
+              border: { display: false },
+              min: 0, max: 12
+            }
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>
