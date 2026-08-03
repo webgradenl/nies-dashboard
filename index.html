@@ -274,6 +274,125 @@ body{background:var(--bg);color:var(--text);font-family:'DM Mono','Courier New',
 /* FOOTER */
 .footer{text-align:center;margin-top:40px;color:var(--faint);font-size:11px;letter-spacing:.08em}
 
+
+/* LOADER */
+.page-loader{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;transition:opacity .8s ease,visibility .8s ease;overflow:hidden}
+.page-loader::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(233,69,96,.08) 0%,transparent 65%);pointer-events:none}
+.page-loader.done{opacity:0;visibility:hidden;pointer-events:none}
+.loader-eyebrow{font-size:11px;color:var(--red);letter-spacing:.25em;text-transform:uppercase;margin-bottom:28px;animation:loaderFadeIn .6s ease both}
+.loader-emoji{font-size:88px;line-height:1;margin-bottom:24px;animation:loaderSnz .6s ease-in-out infinite}
+.loader-quote{font-family:'Syne',sans-serif;font-size:clamp(18px,3vw,28px);font-weight:800;color:var(--text);text-align:center;max-width:560px;padding:0 32px;line-height:1.35;letter-spacing:-.01em;margin-bottom:10px;animation:loaderFadeIn .7s ease .1s both}
+.loader-quote .loader-accent{color:var(--red)}
+.loader-source{font-size:12px;color:var(--muted);letter-spacing:.08em;margin-bottom:36px;animation:loaderFadeIn .7s ease .2s both}
+.loader-bar-wrap{width:min(300px,70vw);height:3px;background:#1e1e3a;border-radius:4px;overflow:hidden;animation:loaderFadeIn .5s ease .3s both}
+.loader-bar{height:100%;background:linear-gradient(90deg,var(--red),var(--purple));border-radius:4px;width:0}
+@keyframes loaderSnz{0%,100%{transform:rotate(0) scale(1)}30%{transform:rotate(-14deg) scale(1.15)}65%{transform:rotate(9deg) scale(1.08)}}
+@keyframes loaderFadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* CITATEN */
+.citaat-card{background:linear-gradient(135deg,#0e0a1a 0%,#12122a 100%);border:1px solid #2a1a4a;border-radius:16px;padding:26px;margin-top:18px;transition:border-color .3s;position:relative;overflow:hidden}
+.citaat-card:hover{border-color:var(--purple)}
+.citaat-card::before{content:'\201C';position:absolute;top:-10px;left:16px;font-size:120px;color:rgba(167,139,250,.08);font-family:Georgia,serif;line-height:1;pointer-events:none}
+.citaat-text{font-size:16px;color:var(--text);line-height:1.7;font-style:italic;margin-bottom:14px;position:relative;z-index:1}
+.citaat-author{font-size:11px;color:var(--purple);letter-spacing:.12em;text-transform:uppercase}
+.citaat-nav{display:flex;gap:8px;margin-top:14px}
+.citaat-btn{background:transparent;border:1px solid var(--border);color:var(--muted);font-size:14px;width:32px;height:32px;border-radius:50%;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.citaat-btn:hover{border-color:var(--purple);color:var(--purple)}
+
+/* TIJDSTIP HEATMAP */
+.heatmap-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px;margin-top:18px;transition:border-color .3s}
+.heatmap-card:hover{border-color:var(--orange)}
+.heatmap-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin-top:16px}
+.heatmap-cell{aspect-ratio:1;border-radius:4px;position:relative;cursor:default;transition:transform .2s}
+.heatmap-cell:hover{transform:scale(1.2);z-index:2}
+.heatmap-lbl{font-size:9px;color:var(--dim);text-align:center;margin-top:4px}
+.heatmap-empty{text-align:center;padding:24px;color:var(--dim);font-size:12px;font-style:italic}
+
+/* VERJAARDAG */
+.bday-card{background:linear-gradient(135deg,#12120a 0%,#1a1a0a 100%);border:1px solid #3a3a1a;border-radius:16px;padding:26px;margin-top:18px;transition:border-color .3s}
+.bday-card:hover{border-color:var(--gold)}
+.bday-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+.bday-block{background:#0d0d0a;border-radius:12px;padding:14px 10px;text-align:center}
+.bday-num{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--gold);line-height:1}
+.bday-lbl{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;margin-top:4px}
+.bday-bar{margin-top:16px;height:8px;background:#1e1e1a;border-radius:4px;overflow:hidden}
+.bday-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--orange));border-radius:4px;transition:width 1.2s ease}
+.bday-fact{font-size:12px;color:var(--muted);margin-top:12px;line-height:1.6;text-align:center}
+
+/* WEEK RAPPORT */
+.week-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px;margin-top:18px;transition:border-color .3s}
+.week-card:hover{border-color:var(--green)}
+.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:16px}
+.week-day{text-align:center}
+.week-day-lbl{font-size:9px;color:var(--dim);margin-bottom:4px;text-transform:uppercase}
+.week-day-bar-wrap{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:60px}
+.week-day-bar{width:100%;border-radius:3px 3px 0 0;transition:height 1s ease;min-height:3px}
+.week-day-num{font-size:11px;font-weight:700;margin-top:4px;font-family:'Syne',sans-serif}
+.week-summary{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:1px solid #1e1e3a}
+.week-sum-item{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+
+/* BINGO */
+.bingo-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px;margin-top:18px;transition:border-color .3s}
+.bingo-card:hover{border-color:#f7c59f}
+.bingo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:16px}
+.bingo-cell{background:#0d0d1a;border:1px solid var(--border);border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .2s;user-select:none;min-height:70px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.bingo-cell:hover{border-color:var(--gold);transform:scale(1.03)}
+.bingo-cell.marked{background:rgba(247,197,159,.15);border-color:var(--gold);box-shadow:0 0 12px rgba(247,197,159,.2)}
+.bingo-cell.bingo-row{background:rgba(68,207,108,.15);border-color:var(--green);animation:aBingo .6s ease}
+.bingo-ico{font-size:22px;line-height:1}
+.bingo-txt{font-size:9px;color:var(--muted);line-height:1.3;text-align:center}
+.bingo-cell.marked .bingo-txt{color:var(--gold)}
+.bingo-free{background:rgba(167,139,250,.15);border-color:var(--purple)!important}
+.bingo-status{margin-top:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.bingo-score{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--gold)}
+.btn-bingo-reset{background:transparent;border:1px solid var(--border);color:var(--muted);font-family:'DM Mono',monospace;font-size:11px;padding:7px 16px;border-radius:20px;cursor:pointer;transition:all .2s}
+.btn-bingo-reset:hover{border-color:var(--red);color:var(--red)}
+@keyframes aBingo{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+
+/* WHEEL */
+.wheel-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px;margin-top:18px;transition:border-color .3s}
+.wheel-card:hover{border-color:var(--purple)}
+.wheel-wrap{display:flex;align-items:center;gap:32px;margin-top:20px;flex-wrap:wrap;justify-content:center}
+.wheel-outer{position:relative;display:inline-block;flex-shrink:0}
+.wheel-pointer{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:28px;z-index:10;filter:drop-shadow(0 2px 8px rgba(0,0,0,.6));line-height:1}
+.wheel-canvas{border-radius:50%;box-shadow:0 0 50px rgba(167,139,250,.3),0 0 100px rgba(167,139,250,.1);display:block}
+.wheel-center-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:54px;height:54px;background:#12122a;border:3px solid var(--purple);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;z-index:5;cursor:pointer;transition:all .25s}
+.wheel-center-btn:hover{background:var(--purple);transform:translate(-50%,-50%) scale(1.12)}
+.wheel-side{flex:1;min-width:200px}
+.wheel-side-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:6px}
+.wheel-side-sub{font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.5}
+.btn-spin{background:linear-gradient(135deg,var(--purple) 0%,#7c3aed 100%);border:none;color:#fff;font-family:'DM Mono',monospace;font-size:13px;font-weight:600;padding:13px 32px;border-radius:30px;cursor:pointer;letter-spacing:.08em;transition:all .25s;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 20px rgba(167,139,250,.3)}
+.btn-spin:hover:not(:disabled){transform:scale(1.05);box-shadow:0 6px 28px rgba(167,139,250,.5)}
+.btn-spin:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
+.spin-stats{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+.spin-stat{background:#0d0d1a;border-radius:10px;padding:10px 14px;text-align:center;flex:1;min-width:70px}
+.spin-stat-num{font-family:'Syne',sans-serif;font-size:20px;font-weight:800}
+.spin-stat-lbl{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;margin-top:2px}
+.spin-hist{margin-top:18px}
+.spin-hist-lbl{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
+.spin-hist-list{display:flex;flex-direction:column;gap:7px;max-height:180px;overflow-y:auto}
+.spin-hist-item{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:8px;background:#0d0d1a;font-size:12px}
+.spin-hist-ico{font-size:16px;width:22px;text-align:center;flex-shrink:0}
+.spin-hist-text{flex:1;color:var(--muted)}
+.spin-hist-tag{font-size:9px;padding:2px 8px;border-radius:20px;font-weight:600;flex-shrink:0}
+.tag-win{background:rgba(68,207,108,.15);color:#44cf6c}
+.tag-dare{background:rgba(233,69,96,.15);color:#e94560}
+.result-overlay{display:none;position:fixed;inset:0;z-index:600;align-items:center;justify-content:center;background:rgba(0,0,0,0);transition:background .4s}
+.result-overlay.open{display:flex}
+.result-overlay.vis{background:rgba(0,0,0,.88)}
+.result-box{position:relative;background:#12122a;border-radius:24px;padding:40px 32px;width:90%;max-width:460px;text-align:center;transform:scale(.3) rotate(-15deg);opacity:0;transition:transform .55s cubic-bezier(.34,1.56,.64,1),opacity .4s}
+.result-overlay.vis .result-box{transform:scale(1) rotate(0);opacity:1}
+.result-type-badge{display:inline-flex;align-items:center;gap:6px;border-radius:20px;padding:5px 16px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px}
+.badge-win{background:rgba(68,207,108,.15);border:1px solid rgba(68,207,108,.3);color:#44cf6c}
+.badge-dare{background:rgba(233,69,96,.15);border:1px solid rgba(233,69,96,.3);color:#e94560}
+.result-main-ico{font-size:80px;display:block;margin-bottom:14px;animation:aFloat 2s ease-in-out infinite}
+.result-title{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;line-height:1.2;margin-bottom:10px}
+.result-desc{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:24px}
+.result-close-btn{background:var(--purple);border:none;color:#fff;font-family:'DM Mono',monospace;font-size:12px;font-weight:600;padding:12px 28px;border-radius:30px;cursor:pointer;transition:all .2s;letter-spacing:.06em}
+.result-close-btn:hover{transform:scale(1.04)}
+.result-box-win{border:2px solid rgba(68,207,108,.4);box-shadow:0 0 60px rgba(68,207,108,.15)}
+.result-box-dare{border:2px solid rgba(233,69,96,.4);box-shadow:0 0 60px rgba(233,69,96,.15)}
+
 /* ANIMATIONS */
 @keyframes aSnz{0%,100%{transform:rotate(0)}25%{transform:rotate(-8deg) scale(1.1)}75%{transform:rotate(8deg) scale(1.1)}}
 @keyframes aUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
@@ -572,7 +691,41 @@ body{background:var(--bg);color:var(--text);font-family:'DM Mono','Courier New',
   </div>
 
   <!-- ALLERGIEËN -->
-  <div class="allergy-card">
+    <!-- WHEEL RESULT MODAL -->
+  <div class="result-overlay" id="wheelResultOv">
+    <div class="result-box" id="wheelResultBox">
+      <span class="result-main-ico" id="resIco"></span>
+      <div class="result-type-badge" id="resTypeBadge"></div>
+      <div class="result-title" id="resTitle"></div>
+      <div class="result-desc" id="resDesc"></div>
+      <button class="result-close-btn" onclick="closeWheelResult()" id="resCloseBtn">&#x2713; Begrepen!</button>
+    </div>
+  </div>
+
+  <!-- WHEEL -->
+  <div class="wheel-card">
+    <div class="card-title">&#x1F3A1; Bram's Geluksrad</div>
+    <div class="card-sub">Laat Bram draaien &mdash; soms wint hij iets, soms moet hij iets doen</div>
+    <div class="wheel-wrap">
+      <div class="wheel-outer">
+        <div class="wheel-pointer">&#x1F53A;</div>
+        <canvas class="wheel-canvas" id="wheelCanvas" width="320" height="320"></canvas>
+        <div class="wheel-center-btn" onclick="spinWheel()">&#x1F3B0;</div>
+      </div>
+      <div class="wheel-side">
+        <div class="wheel-side-title">Draai het rad, Bram!</div>
+        <div class="wheel-side-sub">12 vakjes &mdash; 6 prijzen, 6 opdrachten.<br>Het rad bepaalt. Geen discussie.</div>
+        <button class="btn-spin" id="spinBtn" onclick="spinWheel()">&#x1F3A1; &nbsp;Laat Bram draaien</button>
+        <div class="spin-stats" id="spinStats"></div>
+        <div class="spin-hist" id="spinHist" style="display:none">
+          <div class="spin-hist-lbl">Recente uitslagen</div>
+          <div class="spin-hist-list" id="spinHistList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="allergy-card">
     <div class="card-title">&#x1F33C; Bram's Allergie&euml;n</div>
     <div class="card-sub">Allergisch voor: gras, bomen, honden &amp; huisstofmijt &mdash; huidig seizoensrisico</div>
     <div class="allergy-grid" id="allergyGrid"></div>
@@ -581,6 +734,66 @@ body{background:var(--bg);color:var(--text);font-family:'DM Mono','Courier New',
       <div id="seasonCal"></div>
     </div>
     <div class="corr-box" id="corrBox"></div>
+  </div>
+
+  
+  <!-- LOADER -->
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-eyebrow">&#x25B8; Officieel Werkplek Rapport &mdash; Webgrade</div>
+    <div class="loader-emoji">🤧</div>
+    <div class="loader-quote" id="loaderQuote"></div>
+    <div class="loader-source" id="loaderSource"></div>
+    <div class="loader-bar-wrap"><div class="loader-bar" id="loaderBar"></div></div>
+  </div>
+
+  <!-- CITATEN -->
+  <div class="citaat-card">
+    <div class="card-title">🗣️ Bram aan het woord</div>
+    <div class="card-sub">Wijsheden van de man zelf</div>
+    <div class="citaat-text" id="citaatText"></div>
+    <div class="citaat-author" id="citaatAuthor"></div>
+    <div class="citaat-nav">
+      <button class="citaat-btn" onclick="prevCitaat()">&#x2190;</button>
+      <button class="citaat-btn" onclick="nextCitaat()">&#x2192;</button>
+    </div>
+  </div>
+
+  <!-- TIJDSTIP HEATMAP -->
+  <div class="heatmap-card">
+    <div class="card-title">⏰ Op welk tijdstip niest Bram?</div>
+    <div class="card-sub">Gebaseerd op gemelde tijdstippen &mdash; vul tijdstip in bij het melden voor meer data</div>
+    <div id="heatmapContent"></div>
+  </div>
+
+  <!-- WEEK RAPPORT -->
+  <div class="week-card">
+    <div class="card-title">📅 Terugblik: afgelopen week</div>
+    <div class="card-sub">Niespatroon per dag van de afgelopen 7 werkdagen</div>
+    <div class="week-grid" id="weekGrid"></div>
+    <div class="week-summary" id="weekSummary"></div>
+  </div>
+
+  <!-- VERJAARDAG -->
+  <div class="bday-card">
+    <div class="card-title">🎂 Nies-verjaardag countdown</div>
+    <div class="card-sub">De tracker startte op 23 maart 2026 &mdash; nog hoeveel dagen tot een jaar niesdata?</div>
+    <div class="bday-grid" id="bdayGrid"></div>
+    <div class="bday-bar"><div class="bday-bar-fill" id="bdayBarFill"></div></div>
+    <div class="bday-fact" id="bdayFact"></div>
+  </div>
+
+  <!-- BINGO -->
+  <div class="bingo-card">
+    <div class="card-title">🎯 Nies-Bingo</div>
+    <div class="card-sub">Vink vakjes aan als ze gebeuren &mdash; wie krijgt als eerste een rij vol?</div>
+    <div class="bingo-grid" id="bingoGrid"></div>
+    <div class="bingo-status">
+      <div>
+        <span class="bingo-score" id="bingoScore">0 / 25</span>
+        <span style="font-size:11px;color:var(--dim);margin-left:8px" id="bingoMsg"></span>
+      </div>
+      <button class="btn-bingo-reset" onclick="resetBingo()">&#x21BA; Reset kaart</button>
+    </div>
   </div>
 
   <div class="footer">BRAM NIEZ MONITOR v5.0 &nbsp;&middot;&nbsp; GEZONDHEID IS EEN WERKPLEKPRIORITEIT &#x1F927; &nbsp;&middot;&nbsp; WEBGRADE</div>
@@ -601,24 +814,72 @@ const BASE = [
   {d:'03/04',n:3, m:false,note:null},
   {d:'07/04',n:6, m:false,note:null},
   {d:'08/04',n:2, m:false,note:'Sales training'},
-  {d:'09/04',n:10,m:false,note:'RECORD: 10 niezen'},
-  {d:'10/04',n:4, m:true, note:'Start medicatie'},
-  {d:'13/04',n:4, m:true, note:null},
-  {d:'14/04',n:1, m:true, note:null},
-  {d:'15/04',n:1, m:true, note:null},
-  {d:'16/04',n:4, m:true, note:null},
-  {d:'17/04',n:3, m:true, note:null},
-  {d:'20/04',n:2, m:true, note:null},
-  {d:'21/04',n:1, m:true, note:null},
-  {d:'22/04',n:5, m:true, note:null},
-  {d:'23/04',n:6, m:true, note:null},
-  {d:'24/04',n:3, m:true, note:null},
-  {d:'27/04',n:5, m:true, note:null},
-  {d:'28/04',n:5, m:true, note:null},
-  {d:'29/04',n:2, m:true, note:null},
-  {d:'30/04',n:0, m:true, note:'Eerste niesvrije dag!'},
-  {d:'01/05',n:5, m:true, note:'Belgi\u00eb'},
-  {d:'02/05',n:1, m:true, note:'Belgi\u00eb \u2014 teamuitje (zaterdag)'},
+  {d:'09/04',n:10, m:false,note:'RECORD: 10 niezen'},
+  {d:'10/04',n:4, m:true,note:'Start medicatie'},
+  {d:'13/04',n:4, m:true,note:null},
+  {d:'14/04',n:1, m:true,note:null},
+  {d:'15/04',n:1, m:true,note:null},
+  {d:'16/04',n:4, m:true,note:null},
+  {d:'17/04',n:3, m:true,note:null},
+  {d:'20/04',n:2, m:true,note:null},
+  {d:'21/04',n:1, m:true,note:null},
+  {d:'22/04',n:5, m:true,note:null},
+  {d:'23/04',n:6, m:true,note:null},
+  {d:'24/04',n:3, m:true,note:null},
+  {d:'27/04',n:5, m:true,note:null},
+  {d:'28/04',n:5, m:true,note:null},
+  {d:'29/04',n:2, m:true,note:null},
+  {d:'30/04',n:0, m:true,note:'Eerste niesvrije dag!'},
+  {d:'01/05',n:5, m:true,note:'België dag 1'},
+  {d:'02/05',n:1, m:true,note:'België — teamuitje (zaterdag)'},
+  {d:'04/05',n:1, m:true,note:null},
+  {d:'05/05',n:1, m:true,note:null},
+  {d:'06/05',n:2, m:true,note:null},
+  {d:'13/05',n:2, m:true,note:null},
+  {d:'20/05',n:3, m:true,note:null},
+  {d:'21/05',n:2, m:true,note:null},
+  {d:'22/05',n:1, m:true,note:null},
+  {d:'26/05',n:1, m:true,note:null},
+  {d:'27/05',n:1, m:true,note:null},
+  {d:'28/05',n:2, m:true,note:null},
+  {d:'29/05',n:4, m:true,note:null},
+  {d:'01/06',n:3, m:true,note:null},
+  {d:'02/06',n:1, m:true,note:null},
+  {d:'03/06',n:1, m:true,note:null},
+  {d:'04/06',n:2, m:true,note:null},
+  {d:'05/06',n:3, m:true,note:null},
+  {d:'08/06',n:3, m:true,note:null},
+  {d:'09/06',n:5, m:true,note:null},
+  {d:'10/06',n:1, m:true,note:null},
+  {d:'11/06',n:4, m:true,note:null},
+  {d:'12/06',n:1, m:true,note:null},
+  {d:'15/06',n:4, m:true,note:null},
+  {d:'16/06',n:2, m:true,note:null},
+  {d:'17/06',n:1, m:true,note:null},
+  {d:'18/06',n:5, m:true,note:null},
+  {d:'19/06',n:3, m:true,note:null},
+  {d:'22/06',n:2, m:true,note:null},
+  {d:'23/06',n:3, m:true,note:null},
+  {d:'24/06',n:2, m:true,note:'Thuiswerken'},
+  {d:'25/06',n:1, m:true,note:null},
+  {d:'26/06',n:3, m:true,note:null},
+  {d:'29/06',n:3, m:true,note:null},
+  {d:'30/06',n:3, m:true,note:null},
+  {d:'01/07',n:4, m:true,note:null},
+  {d:'13/07',n:3, m:true,note:null},
+  {d:'14/07',n:0, m:true,note:'Tweede niesvrije dag!'},
+  {d:'15/07',n:2, m:true,note:null},
+  {d:'16/07',n:1, m:true,note:null},
+  {d:'17/07',n:4, m:true,note:null},
+  {d:'21/07',n:2, m:true,note:null},
+  {d:'22/07',n:3, m:true,note:null},
+  {d:'23/07',n:2, m:true,note:null},
+  {d:'27/07',n:1, m:true,note:null},
+  {d:'28/07',n:1, m:true,note:null},
+  {d:'29/07',n:3, m:true,note:null},
+  {d:'30/07',n:2, m:true,note:null},
+  {d:'31/07',n:1, m:true,note:null},
+  {d:'03/08',n:5, m:true,note:null},
 ];
 const MED_DATE = '10/04';
 
@@ -1053,6 +1314,8 @@ function renderAll(){
 
   // Chart
   renderChart(data,curTab);
+  renderHeatmap();
+  renderWeekReport();
 }
 
 // ── CHART ─────────────────────────────────────────────────────────────────────
@@ -1083,7 +1346,7 @@ function switchTab(type,btn){
 // ── KAART ─────────────────────────────────────────────────────────────────────
 let niesMap=null;
 const LOCS=[
-  {country:'Nederland', city:'Den Haag', lat:52.076,lng:4.300, niezen:107,flag:'\u{1F1F3}\u{1F1F1}',note:'Thuisbasis \u2014 waar het allemaal begon',color:'#e94560'},
+  {country:'Nederland', city:'Den Haag', lat:52.076,lng:4.300, niezen:221,flag:'\u{1F1F3}\u{1F1F1}',note:'Thuisbasis \u2014 waar het allemaal begon',color:'#e94560'},
   {country:'Belgi\u00eb',city:'Gent/Brussel',lat:50.850,lng:4.351,niezen:6,  flag:'\u{1F1E7}\u{1F1EA}',note:'Teamuitje 1-2 mei 2026',color:'#ff6b35'},
 ];
 function initMap(){
@@ -1105,6 +1368,325 @@ new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){init
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeAlarm();closeVideo();closeIncident();}});
 
 // ── START ─────────────────────────────────────────────────────────────────────
+const WHEEL_SEGS=[
+  {type:"win",ico:'☕',label:"Bram trakteert NIET",desc:"Iedereen haalt vandaag zijn eigen koffie. Bram heeft gewonnen. De rest niet.",color:"#1a4a1a"},
+  {type:"win",ico:'🍺',label:"Vroege vrijdagborrel!",desc:"De vrijdagborrel begint een uur eerder. Bram heeft dit afgedwongen.",color:"#1a3a0a"},
+  {type:"win",ico:'🍪',label:"Bram krijgt een koekje",desc:"Iemand haalt nu een koekje voor Bram. Chocola bij voorkeur.",color:"#2a2a0a"},
+  {type:"win",ico:'🏠',label:"Thuiswerken morgen!",desc:"Bram mag morgen thuiswerken. Het rad heeft gesproken.",color:"#0a2a2a"},
+  {type:"win",ico:'💰',label:"Bram kiest de lunch",desc:"De lunch-beslissing ligt vandaag bij Bram. Absolute macht.",color:"#1a1a4a"},
+  {type:"win",ico:'🎵',label:"Bram kiest de muziek",desc:"Bram bepaalt de rest van de dag welke muziek er speelt.",color:"#2a0a2a"},
+  {type:"dare",ico:'☕',label:"Bram trakteert koffie",desc:"Bram haalt NU voor iedereen koffie. Klaagzangen worden genegeerd.",color:"#4a0a0a"},
+  {type:"dare",ico:'📸',label:"Nies-foto voor Slack",desc:"Bram maakt zijn beste nies-gezicht. Wordt zijn profielfoto voor 1 week.",color:"#3a0a0a"},
+  {type:"dare",ico:'🦻',label:"Tissues bijvullen",desc:"Bram vult ELKE tissuedoos op kantoor bij. Inclusief de wc.",color:"#4a1a0a"},
+  {type:"dare",ico:'🏃',label:"10 jumping jacks nu!",desc:"Bram doet ter plekke 10 jumping jacks. Het team telt hardop mee.",color:"#3a0a1a"},
+  {type:"dare",ico:'📊',label:"Nies-presentatie!",desc:"Bram geeft een 2-min presentatie over zijn niesdata. Vragen verplicht.",color:"#4a0a2a"},
+  {type:"dare",ico:'🌿',label:"Plant naar Bram bureau",desc:"De meest pollenrijke plant staat vandaag naast Bram bureau.",color:"#1a3a0a"}
+];
+let wheelAngle=0,wheelSpinning=false;
+let spinHistory=[];
+try{spinHistory=JSON.parse(localStorage.getItem('bramSpin_v5')||'[]');}catch(e){}
+
+function drawWheel(angle){
+  const canvas=document.getElementById('wheelCanvas');if(!canvas)return;
+  const ctx=canvas.getContext('2d'),cx=canvas.width/2,cy=canvas.height/2,r=cx-8;
+  const sa=(Math.PI*2)/WHEEL_SEGS.length;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  WHEEL_SEGS.forEach((s,i)=>{
+    const s0=angle+i*sa-Math.PI/2,s1=s0+sa;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,s0,s1);ctx.closePath();
+    ctx.fillStyle=s.color;ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.beginPath();ctx.arc(cx,cy,r,s0+.02,s1-.02);
+    ctx.strokeStyle=s.type==='win'?'#44cf6c':'#e94560';ctx.lineWidth=5;ctx.stroke();
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(s0+sa/2);ctx.translate(r*.68,0);ctx.rotate(Math.PI/2);
+    ctx.font='20px serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(s.ico,0,-7);
+    ctx.font='500 8px DM Mono,monospace';ctx.fillStyle='rgba(255,255,255,.8)';
+    const words=s.label.split(' ');let line='',lines=[];
+    words.forEach(w=>{if((line+w).length>10){if(line)lines.push(line.trim());line=w+' ';}else line+=w+' ';});
+    if(line)lines.push(line.trim());
+    lines.slice(0,2).forEach((l,li)=>ctx.fillText(l,0,6+li*10));
+    ctx.restore();
+  });
+  ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
+  ctx.strokeStyle='rgba(167,139,250,.4)';ctx.lineWidth=3;ctx.stroke();
+}
+
+function spinWheel(){
+  if(wheelSpinning)return;
+  wheelSpinning=true;document.getElementById('spinBtn').disabled=true;
+  const idx=Math.floor(Math.random()*WHEEL_SEGS.length);
+  const sa=(Math.PI*2)/WHEEL_SEGS.length;
+  const extra=(Math.floor(Math.random()*5)+6)*Math.PI*2;
+  const target=-(idx*sa+sa/2)-Math.PI/2;
+  const totalRot=extra+((target-wheelAngle+Math.PI*10)%(Math.PI*2));
+  const dur=4500+Math.random()*800,t0=performance.now(),a0=wheelAngle;
+  function ease(t){return 1-Math.pow(1-t,4);}
+  function frame(now){
+    const p=Math.min((now-t0)/dur,1);
+    wheelAngle=a0+totalRot*ease(p);drawWheel(wheelAngle);
+    if(p<1)requestAnimationFrame(frame);
+    else{wheelSpinning=false;document.getElementById('spinBtn').disabled=false;showWheelResult(WHEEL_SEGS[idx]);}
+  }
+  requestAnimationFrame(frame);
+}
+
+function showWheelResult(seg){
+  const ov=document.getElementById('wheelResultOv'),box=document.getElementById('wheelResultBox');
+  document.getElementById('resIco').textContent=seg.ico;
+  document.getElementById('resTitle').textContent=seg.label;
+  document.getElementById('resDesc').textContent=seg.desc;
+  const badge=document.getElementById('resTypeBadge'),btn=document.getElementById('resCloseBtn');
+  if(seg.type==='win'){
+    badge.className='result-type-badge badge-win';badge.textContent='🏆 Gewonnen!';
+    box.className='result-box result-box-win';
+    btn.style.background='#44cf6c';btn.textContent='★ Bram wint! Deal.';
+    confetti();
+  } else {
+    badge.className='result-type-badge badge-dare';badge.textContent='🔥 Opdracht!';
+    box.className='result-box result-box-dare';
+    btn.style.background='var(--red)';btn.textContent='✓ Bram doet het. Nu meteen.';
+  }
+  ov.classList.add('open');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>ov.classList.add('vis')));
+  spinHistory.unshift({ico:seg.ico,label:seg.label,type:seg.type,ts:Date.now()});
+  if(spinHistory.length>10)spinHistory=spinHistory.slice(0,10);
+  try{localStorage.setItem('bramSpin_v5',JSON.stringify(spinHistory));}catch(e){}
+  renderSpinUI();
+}
+
+function closeWheelResult(){
+  const ov=document.getElementById('wheelResultOv');
+  ov.classList.remove('vis');setTimeout(()=>ov.classList.remove('open'),400);
+}
+document.getElementById('wheelResultOv').addEventListener('click',e=>{if(e.target===e.currentTarget)closeWheelResult();});
+
+function renderSpinUI(){
+  const wins=spinHistory.filter(s=>s.type==='win').length,dares=spinHistory.filter(s=>s.type==='dare').length;
+  document.getElementById('spinStats').innerHTML=[
+    {n:spinHistory.length,l:'Draaien',   c:'var(--purple)'},
+    {n:wins,             l:'Gewonnen',  c:'var(--green)'},
+    {n:dares,            l:'Opdrachten',c:'var(--red)'},
+  ].map(s=>'<div class="spin-stat"><div class="spin-stat-num" style="color:'+s.c+'">'+s.n+'</div><div class="spin-stat-lbl">'+s.l+'</div></div>').join('');
+  if(spinHistory.length>0){
+    document.getElementById('spinHist').style.display='block';
+    document.getElementById('spinHistList').innerHTML=spinHistory.slice(0,5).map(s=>
+      '<div class="spin-hist-item"><span class="spin-hist-ico">'+s.ico+'</span><span class="spin-hist-text">'+s.label+'</span><span class="spin-hist-tag '+(s.type==='win'?'tag-win':'tag-dare')+'">'+( s.type==='win'?'Gewonnen':'Opdracht')+'</span></div>'
+    ).join('');
+  }
+}
+
+drawWheel(0);
+renderSpinUI();
+
+// LOADER
+(function(){
+  const QUOTES=[
+    {q:'Een dag niet geniest is een dag niet geleefd.',s:'Bram, dagelijks'},
+    {q:'Ik ben Brade, en welkom bij Webgrade!',s:'Bram, vol vertrouwen'},
+    {q:'Een nies in de morgen is een dag zonder zorgen.',s:'Bram, optimistisch'},
+    {q:'Je hoeft niks te zeggen. Mijn neus spreekt voor zich.',s:'Bram, bescheiden'},
+    {q:'Medicatie of niet, de neus weet wat de neus wil.',s:'Bram, filosofisch'},
+    {q:'Gesundheit. Nee, dat zeg ik tegen mezelf.',s:'Bram, realistisch'},
+    {q:'Drie keer niezen brengt geluk. Ik heb veel geluk gehad.',s:'Bram, positief'},
+    {q:'De printer begrijpt me. Helaas wederzijds.',s:'Bram, over zijn werkplek'},
+    {q:'Anderen hebben een koffieprobleem. Ik heb een niesoplossing.',s:'Bram, trots'},
+    {q:'30 april 2026: de stilste dag van mijn leven.',s:'Bram, over zijn niesvrije dag'},
+    {q:'Ze houden bij hoe vaak ik nies. Ik vind dat eigenlijk heel lief.',s:'Bram, geroerd'},
+    {q:'België dacht dat het veilig was. Mijn neus dacht daar anders over.',s:'Bram, internationaal'}
+  ];
+  const pick=QUOTES[Math.floor(Math.random()*QUOTES.length)];
+  const qEl=document.getElementById('loaderQuote'), sEl=document.getElementById('loaderSource');
+  qEl.textContent='\u201E'+pick.q+'\u201C';
+  sEl.textContent='\u2014 '+pick.s;
+  let pct=0;
+  const bar=document.getElementById('loaderBar');
+  const iv=setInterval(()=>{
+    pct=Math.min(pct+(Math.random()*14+8),100);
+    bar.style.width=pct+'%';
+    if(pct>=100){clearInterval(iv);setTimeout(()=>document.getElementById('pageLoader').classList.add('done'),500);}
+  },100);
+})();
+
+// CITATEN
+const CITATEN=[
+  {t:'Ik nies dus ik ben.',a:'Bram, filosofisch, 09/04 (10 niezen)'},
+  {t:'De printer is mijn vijand. Maar ik geef niet op.',a:'Bram, strijdlustig, na een dienst bij de printer'},
+  {t:'Medicatie werkt. Grotendeels. Soms.',a:'Bram, genuanceerd, na start medicatie'},
+  {t:'Zelfs in België laat mijn neus me niet met rust. Grenzen bestaan niet voor allergenen.',a:'Bram, internationaal, 01/05'},
+  {t:'30 april was de mooiste dag van het jaar. Nul niezen. Ik huilde bijna.',a:'Bram, emotioneel, 30/04 (niesvrije dag)'},
+  {t:'Het rad bepaalt. Ik accepteer. Maar ik ben het er niet mee eens.',a:'Bram, over het geluksrad'},
+  {t:'Thuiswerken is niet fijn. Thuiswerken is gewoon minder niezen. Dat is alles.',a:'Bram, eerlijk, 31/03 (2 niezen)'},
+  {t:'Ik snap het niet. Ik snap het echt niet. 10 niezen. Tien.',a:'Bram, verward, 09/04'},
+  {t:'De plant staat te dicht bij mijn bureau. Maar ik zeg niks. Ik ben professioneel.',a:'Bram, professioneel'},
+  {t:'Iedereen weet wanneer ik er ben. Helaas.',a:'Bram, realistisch'},
+];
+let citaatIdx=Math.floor(Math.random()*CITATEN.length);
+function renderCitaat(){
+  const c=CITATEN[citaatIdx];
+  document.getElementById('citaatText').textContent='\u201E'+c.t+'\u201C';
+  document.getElementById('citaatAuthor').textContent='\u2014 '+c.a;
+}
+function nextCitaat(){citaatIdx=(citaatIdx+1)%CITATEN.length;renderCitaat();}
+function prevCitaat(){citaatIdx=(citaatIdx-1+CITATEN.length)%CITATEN.length;renderCitaat();}
+renderCitaat();
+
+// HEATMAP
+function renderHeatmap(){
+  const reps=allRep(), el=document.getElementById('heatmapContent');
+  const byHour=new Array(24).fill(0);
+  let hasData=false;
+  reps.forEach(r=>{
+    if(r.time){
+      const h=parseInt(r.time.split(':')[0]);
+      if(!isNaN(h)){byHour[h]+=r.niezen;hasData=true;}
+    }
+  });
+  if(!hasData){
+    el.innerHTML='<div class="heatmap-empty">Nog geen tijdstippen geregistreerd. Vul een tijdstip in bij het melden voor meer data.</div>';
+    return;
+  }
+  const maxH=Math.max(...byHour,1);
+  const labels=['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
+  el.innerHTML='<div class="heatmap-grid">'+byHour.map((v,i)=>{
+    const pct=v/maxH, r=Math.floor(233*pct), g=Math.floor(207*(1-pct));
+    const col=v>0?'rgba('+r+','+g+',96,'+(0.15+pct*0.85)+')':'#1e1e3a';
+    return '<div style="display:flex;flex-direction:column;align-items:center"><div class="heatmap-cell" style="background:'+col+';border:1px solid '+(v>0?'rgba('+r+','+g+',96,.4)':'transparent')+';width:100%" title="'+labels[i]+':00 \u2014 '+v+' niezen"></div><div class="heatmap-lbl">'+labels[i]+'</div></div>';
+  }).join('')+'</div>';
+}
+
+// WEEK RAPPORT
+function renderWeekReport(){
+  const data=merged();
+  const last7=data.slice(-7);
+  if(!last7.length)return;
+  const maxN=Math.max(...last7.map(d=>d.niezen),1);
+  const dayNames=['Zo','Ma','Di','Wo','Do','Vr','Za'];
+  document.getElementById('weekGrid').innerHTML=last7.map(d=>{
+    const pct=d.niezen/maxN*100;
+    const col=d.medicatie?'#44cf6c':'#e94560';
+    const h=Math.max(pct*.6,3);
+    const dt=d.date.split('/');
+    const jsDate=new Date(2026,parseInt(dt[1])-1,parseInt(dt[0]));
+    const dn=dayNames[jsDate.getDay()];
+    return '<div class="week-day"><div class="week-day-lbl">'+dn+'<br>'+d.date+'</div><div class="week-day-bar-wrap"><div class="week-day-bar" style="background:'+col+';height:'+h+'px;width:80%"></div></div><div class="week-day-num" style="color:'+col+'">'+d.niezen+'</div></div>';
+  }).join('');
+  const tot=last7.reduce((s,d)=>s+d.niezen,0);
+  const avg=(tot/last7.length).toFixed(1);
+  const best=last7.reduce((m,d)=>d.niezen<m.niezen?d:m,last7[0]);
+  const worst=last7.reduce((m,d)=>d.niezen>m.niezen?d:m,last7[0]);
+  const prevWeek=data.slice(-14,-7);
+  const prevTot=prevWeek.length?prevWeek.reduce((s,d)=>s+d.niezen,0):0;
+  const diff=tot-prevTot, diffStr=(diff>0?'+':'')+diff;
+  const diffCol=diff<=0?'var(--green)':'var(--red)';
+  document.getElementById('weekSummary').innerHTML=
+    '<div class="week-sum-item">📊 Totaal: <strong>'+tot+'</strong></div>'+
+    '<div class="week-sum-item">Ø Gem.: <strong>'+avg+'/dag</strong></div>'+
+    '<div class="week-sum-item">✅ Best: <strong>'+best.date+' ('+best.niezen+')</strong></div>'+
+    '<div class="week-sum-item">🔴 Zwaarst: <strong>'+worst.date+' ('+worst.niezen+')</strong></div>'+
+    (prevWeek.length?'<div class="week-sum-item">vs vorige week: <strong style="color:'+diffCol+'">'+diffStr+'</strong></div>':'');
+}
+
+// VERJAARDAG
+function renderBday(){
+  const start=new Date('2026-03-23'), bday=new Date('2027-03-23'), now=new Date();
+  const total=bday-start, elapsed=now-start, remaining=bday-now;
+  const pct=Math.min(elapsed/total*100,100);
+  const days=Math.max(0,Math.floor(remaining/86400000));
+  const hrs=Math.floor((remaining%86400000)/3600000);
+  const mins=Math.floor((remaining%3600000)/60000);
+  const secs=Math.floor((remaining%60000)/1000);
+  document.getElementById('bdayGrid').innerHTML=[
+    {n:days,  l:'Dagen'},
+    {n:hrs,   l:'Uren'},
+    {n:mins,  l:'Minuten'},
+    {n:secs,  l:'Seconden'},
+  ].map(b=>'<div class="bday-block"><div class="bday-num">'+String(b.n).padStart(2,'0')+'</div><div class="bday-lbl">'+b.l+'</div></div>').join('');
+  document.getElementById('bdayBarFill').style.width=pct+'%';
+  const data=merged(), tot=data.reduce((s,d)=>s+d.niezen,0);
+  const daysTracked=data.length, rate=tot/daysTracked;
+  const projected=Math.round(rate*260);
+  document.getElementById('bdayFact').textContent='Op basis van het huidige tempo ('
+    +rate.toFixed(1)+' niezen/dag) verwachten we op de 1-jaarsdag ongeveer '
+    +projected+' niezen in totaal. De neus heeft al '
+    +tot+' niezen achter de rug in '+daysTracked+' werkdagen.';
+}
+renderBday();
+setInterval(renderBday,1000);
+
+// BINGO
+const BINGO_CELLS=[
+  {ico:'🔴',txt:'10+ niezen op 1 dag'},
+  {ico:'🏠',txt:'Thuiswerken = minder niezen'},
+  {ico:'💼',txt:'Niest tijdens meeting'},
+  {ico:'🌿',txt:'Plant krijgt de schuld'},
+  {ico:'🖨️',txt:'Bij de printer geniest'},
+  {ico:'☀️',txt:'Meer niezen bij mooi weer'},
+  {ico:'💊',txt:'Medicatie vergeten'},
+  {ico:'🐶',txt:'Hond in de buurt'},
+  {ico:'🇧🇪',txt:'Geniest in het buitenland'},
+  {ico:'🏆',txt:'Niesvrije dag!'},
+  {ico:'🍺',txt:'Genieste tijdens borrel'},
+  {ico:'🥺',txt:'3x achter elkaar'},
+  {ico:'⭐',txt:'VRIJ VAKJE'},
+  {ico:'📊',txt:'Niesrecord gebroken'},
+  {ico:'⏰',txt:'Al voor 9u geniest'},
+  {ico:'🍕',txt:'Geniest tijdens lunch'},
+  {ico:'🎵',txt:'Geniest op muziek'},
+  {ico:'🤮',txt:'Collega ziek erdoor'},
+  {ico:'0001F9BA',txt:'Huisstofmijt dag'},
+  {ico:'📉',txt:'Week onder gem.'},
+  {ico:'😶',txt:'Iedereen negeert het'},
+  {ico:'😐',txt:'Bram zegt: sorry'},
+  {ico:'🤔',txt:'Nies zonder aanleiding'},
+  {ico:'🔥',txt:'5 niezen voor 10u'},
+  {ico:'🎡',txt:'Rad gedraaid vandaag'},
+];
+
+let bingoMarked=new Set();
+try{const saved=JSON.parse(localStorage.getItem('bramBingo_v5')||'[]');bingoMarked=new Set(saved);}catch(e){}
+bingoMarked.add(12); // free cell always marked
+
+function saveBingo(){try{localStorage.setItem('bramBingo_v5',JSON.stringify([...bingoMarked]));}catch(e){}}
+
+function checkBingo(){
+  const lines=[
+    [0,1,2,3,4],[5,6,7,8,9],[10,11,12,13,14],[15,16,17,18,19],[20,21,22,23,24],
+    [0,5,10,15,20],[1,6,11,16,21],[2,7,12,17,22],[3,8,13,18,23],[4,9,14,19,24],
+    [0,6,12,18,24],[4,8,12,16,20]
+  ];
+  const bingoLines=lines.filter(l=>l.every(i=>bingoMarked.has(i)));
+  return bingoLines.flat();
+}
+
+function renderBingo(){
+  const winCells=new Set(checkBingo());
+  document.getElementById('bingoGrid').innerHTML=BINGO_CELLS.map((c,i)=>{
+    const isMark=bingoMarked.has(i), isWin=winCells.has(i), isFree=i===12;
+    return '<div class="bingo-cell'+(isMark?' marked':'')+(isWin?' bingo-row':'')+(isFree?' bingo-free':'')
+      +'" onclick="toggleBingo('+i+')">'+'<div class="bingo-ico">'+c.ico+'</div><div class="bingo-txt">'+c.txt+'</div></div>';
+  }).join('');
+  const marked=bingoMarked.size;
+  const bingos=checkBingo().length>0?Math.floor(new Set(checkBingo()).size/5):0;
+  document.getElementById('bingoScore').textContent=marked+' / 25';
+  const msgs=['Nog niets... begin met aanvinken!','Goed bezig!','Op dreef!','Bijna een rij!','BINGO! Rij vol!','MEERDERE BINGO\u2019S! Bram, jij bent legendarisch.'];
+  const lvl=Math.min(Math.floor(marked/5),msgs.length-1);
+  document.getElementById('bingoMsg').textContent=winCells.size>0?'🏆 BINGO! '+Math.floor(winCells.size/5)+' rij(en) vol!':msgs[lvl];
+}
+
+function toggleBingo(i){
+  if(i===12)return;
+  if(bingoMarked.has(i))bingoMarked.delete(i); else bingoMarked.add(i);
+  saveBingo();renderBingo();
+}
+
+function resetBingo(){
+  if(!confirm('Bingo kaart resetten?'))return;
+  bingoMarked=new Set([12]);saveBingo();renderBingo();
+}
+
+renderBingo();
+
+
 initMQTT();
 renderAll();
 </script>
